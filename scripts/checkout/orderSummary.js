@@ -6,7 +6,6 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOption, getDeliveryOption } from "../../data/deliveryOptions.js";    
 import { renderPaymentSummary } from "./paymentSummary.js";
 
-hello();
 
 /*we did use external libraries to use already an implemented code(best practice to avoid complicated code)
 calculate delivery date:
@@ -17,9 +16,7 @@ dddd : the name of the day of the week (sunday)
 MMMM: the full Month name (January)
 D: the day of the month (1-31)
 */ 
-const today= dayjs();
-const deliveryDate = today.add(7,'days');
-console.log(deliveryDate.format('dddd, MMMM D'));
+
 
 export function renderOrderSummary(){
 
