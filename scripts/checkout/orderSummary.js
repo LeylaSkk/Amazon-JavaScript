@@ -1,9 +1,9 @@
 import { cart, removeFromCart, updateDeliveryOption } from "../../data/cart.js";
-import { products } from "../../data/products.js";
+import { products, getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { deliveryOption } from "../../data/deliveryOptions.js";    
+import { deliveryOption, getDeliveryOption } from "../../data/deliveryOptions.js";    
 
 hello();
 
@@ -29,24 +29,12 @@ export function renderOrderSummary(){
         //look for product from products list by its id then to retrieve its relative image...
         const productId =cartItem.productId;
 
-        let matchingProduct;
-        products.forEach((product)=>{
-            if(product.id===productId){
-                matchingProduct=product;
-                
-            }
-
-        });
+        let matchingProduct = getProduct(productId);
+        
 
         //get the delivery days preperly and caluculate the date we need at 52
         const deliveryOptionId= cartItem.deliveryOptionId;
-        let selectedDeliveryOption;
-        deliveryOption.forEach((option) => {
-        if (option.id === deliveryOptionId) {
-            selectedDeliveryOption = option; // Fixed typo and correct variable assignment
-        }
-    });
-
+        const selectedDeliveryOption = getDeliveryOption(deliveryOptionId);
 
         const today = dayjs();
         const deliveryDate = today.add(selectedDeliveryOption.deliveryDays, 'days'); // Uses the matched delivery option
