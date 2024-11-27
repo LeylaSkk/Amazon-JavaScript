@@ -4,6 +4,7 @@ import { formatCurrency } from "../utils/money.js";
 import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOption, getDeliveryOption } from "../../data/deliveryOptions.js";    
+import { renderPaymentSummary } from "./paymentSummary.js";
 
 hello();
 
@@ -133,6 +134,8 @@ export function renderOrderSummary(){
             );
             //so now we got the element we want to delete from this interface 
             container.remove();
+            // when we click deleted the prices of the deleted products gets removed 
+            renderPaymentSummary();
         });
         //now how actually we will be removing this product (productID) from the cart 
     });
@@ -141,6 +144,8 @@ export function renderOrderSummary(){
             const {productId, deliveryOptionId}= element.dataset;
             updateDeliveryOption(productId,deliveryOptionId);
             renderOrderSummary();
+            //this will make the prices change each time we want to change the shipping method
+            renderPaymentSummary();
         });
     });
 }
