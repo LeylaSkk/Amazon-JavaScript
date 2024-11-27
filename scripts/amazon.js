@@ -1,3 +1,5 @@
+import { cart } from "../data/cart.js";
+
 let productsHTML= '';
 
 products.forEach((product) => {
@@ -71,7 +73,7 @@ document.querySelectorAll('.js-add-to-cart')
         matchingItem = item;
         }
        });
-
+       //to make quantity=2 f we have matching item 
        if (matchingItem) {
         matchingItem.quantity += 1;
        }else{

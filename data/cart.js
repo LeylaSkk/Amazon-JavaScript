@@ -1,1 +1,1 @@
-window.cart = [];
+export const cart = [];
