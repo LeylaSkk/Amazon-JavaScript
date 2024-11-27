@@ -52,3 +52,15 @@ export function removeFromCart(productId){
     cart= newCart;
     saveToStorage();
 }
+ export function updateDeliveryOption(productId, deliveryOptionId){
+    let matchingItem;
+    cart.forEach((cartItem)=>{
+     if (productId === cartItem.productId){
+     matchingItem = cartItem;
+     }
+    });
+    //this will give us the cart item that matches this producid andsave it to this variable
+
+    matchingItem.deliveryOptionId = deliveryOptionId;
+    saveToStorage();
+ }
