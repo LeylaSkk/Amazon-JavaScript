@@ -17,8 +17,9 @@ cart.forEach((cartItem)=>{
     });
     
     cartSummaryHTML +=
+    //we added this in order to delete it and when refresh the page it will be gone
     `
-    <div class="cart-item-container">
+    <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
             <div class="delivery-date">
               Delivery date: Tuesday, June 21
             </div>
@@ -104,7 +105,11 @@ document.querySelectorAll('.js-delete-link').forEach((link)=>{
     link.addEventListener('click',()=>{
         const productId =link.dataset.productId;
         removeFromCart(productId);
-        console.log(cart);
+        const container= document.querySelector(` .js-cart-item-container-${productId}`
+
+        );
+        //so now we got the element we want to delete from this interface 
+        container.remove();
     });
     //now how actually we will be removing this product (productID) from the cart 
 });
