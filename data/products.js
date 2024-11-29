@@ -1,5 +1,5 @@
 
-
+//function to finds the matching product using the productId 
 export function getProduct(productId) {
   let matchingProduct;
         products.forEach((product)=>{

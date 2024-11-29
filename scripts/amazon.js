@@ -59,8 +59,11 @@ products.forEach((product) => {
 console.log(productsHTML);
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-
-//handles updating the webpage rather than the cart
+/** 3. to calculate the whole quantity of the product first we need to loop through the cart array 
+ we initialised the cartQuantity to 0 and as we loop through this array cartItem  we re going to 
+ add the items quantity to the variable we already initialized 
+ */
+// we didnt put this function into cart bcs it actually handles updating the webpage rather than the cart
 function updateCartQuantity(){
     //calculate total quantity displayed in the cart
     let cartQuantity = 0;
@@ -68,10 +71,15 @@ function updateCartQuantity(){
         cartQuantity +=cartItem.quantity;
 });
 
-
+/** 4. so here after we calculated the quantity of products purchased we need to update the display of quantity on the top right icon of our web page by using DOM 'Document Object Model' we can also search 
+  js-cart-quantity in the amazon.html
+*/
 
 document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
+/** 1. so this what it does to make plcae order button dynamic so we added an class attribute 
+  js-add-to-cart and we created an event listener each time we click on the button (there s also a problem abt which product to add to cart actually so we added data attribute data- and it allows us to add any info to an element  so we use this command to allow us check our producId we notice that the annotation of product-id have changed from kebab case into camel case productId) then after adding a product we update the cart quantity * 
+ */
 //add product when clicking on add
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button)=> {

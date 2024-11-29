@@ -20,15 +20,15 @@ D: the day of the month (1-31)
 
 export function renderOrderSummary(){
 
-
+    /**we add this variable so each time we loop through the cart w e add this html and store it in */
 
     let cartSummaryHTML = '';
     cart.forEach((cartItem)=>{
-        //look for product from products list by its id then to retrieve its relative image...
-        const productId =cartItem.productId;
-
-        let matchingProduct = getProduct(productId);
         
+        const productId =cartItem.productId;
+        //here we looked for our matching product
+        let matchingProduct = getProduct(productId);
+        //so once we got our matching product we can retrieve from it its relative pic,price and name
 
         //get the delivery days preperly and caluculate the date we need at 52
         const deliveryOptionId= cartItem.deliveryOptionId;
@@ -41,6 +41,7 @@ export function renderOrderSummary(){
         
         cartSummaryHTML +=
         //we added this in order to delete it and when refresh the page it will be gone
+        /**  we took this html from checkout.html to display each container of each product chosen or added to the cart dynamically  */
         `
         <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
                 <div class="delivery-date">
@@ -82,7 +83,10 @@ export function renderOrderSummary(){
         `;
         
     });
-
+    /** 1.loop through deliveryOptions
+     * 2.for each delivery Option generate some html 
+     * 3.combine the html togther 
+    */
     function deliveryOptionsHTML(matchingProduct,cartItem) {
         let html = '';
 
@@ -93,9 +97,9 @@ export function renderOrderSummary(){
             const priceString = deliveryOption.priceCents === 0 
                 ? 'Free' 
                 : `$${formatCurrency(deliveryOption.priceCents)} -`;
-
+            /*in order to make one of the delivery options to be checked we create isChecked however if we insert checked into the radio button all of the options will be cheked so we need to check first if the  the delivery option id matches the one  saved in the cart */
             const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
-
+            //we used delivery-option-${matchingProduct.id} to make each radio button name unique to each product 
             html += `
             <div class="delivery-option js-delivery-option"
             data-product-id="${matchingProduct.id}"
@@ -122,25 +126,33 @@ export function renderOrderSummary(){
     //how we will know which product to delete that why we need data-attibute to look at it with id 
     document.querySelectorAll('.js-delete-link').forEach((link)=>{
         link.addEventListener('click',()=>{
+            //so now we got the element we want to delete from this interface 
             const productId =link.dataset.productId;
             removeFromCart(productId);
+            /** next thing wee need to do after clicking delete is to update the html by using the DOM to get the element to remove then use .remove() method */
             const container= document.querySelector(` .js-cart-item-container-${productId}`
 
             );
-            //so now we got the element we want to delete from this interface 
+            
             container.remove();
             // when we click deleted the prices of the deleted products gets removed 
             renderPaymentSummary();
         });
-        //now how actually we will be removing this product (productID) from the cart 
+        
     });
     document.querySelectorAll('.js-delivery-option').forEach((element)=>{
         element.addEventListener('click', ()=>{
-            const {productId, deliveryOptionId}= element.dataset;
+            const {productId, deliveryOptionId}= element.dataset;// how we get these two ? we add data attributes 
             updateDeliveryOption(productId,deliveryOptionId);
-            renderOrderSummary();
+            renderOrderSummary();//to keep the page up to date an improvment for DOM
             //this will make the prices change each time we want to change the shipping method
             renderPaymentSummary();
         });
     });
 }
+//so we did regenrate html when updating delivery option by using MVC (model-view-controller)
+/**MVC : split our code into 3 parts 
+ * 1.Model= saves and manages data (this is our data section where we have cart,products...)
+ * 2.view= takes data and displays on page  (we did this in orderSummary and paymentSummary)
+ * 3.controller=runs some code when we interact with the page (eventListener part )
+ */

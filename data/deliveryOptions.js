@@ -1,3 +1,4 @@
+//here we saved the delivery options seperately and assigned an id to each type
 export const deliveryOption = [{
     id: '1',
     deliveryDays: 7,
@@ -13,11 +14,13 @@ export const deliveryOption = [{
     priceCents:999
 }];
 
+
+//function takes the deliveryOptionId and find its delivery option from this array
 export function getDeliveryOption(deliveryOptionId){
     let selectedDeliveryOption;
     deliveryOption.forEach((option) => {
     if (option.id === deliveryOptionId) {
-        selectedDeliveryOption = option; // Fixed typo and correct variable assignment
+        selectedDeliveryOption = option; 
     }
 });
 return selectedDeliveryOption || deliveryOption[0];

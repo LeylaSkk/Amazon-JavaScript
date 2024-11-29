@@ -55,7 +55,9 @@
       <div class="products-grid js-products-grid" >
       </div>
     </div>
-    
+    <!--so here before using modules we had 3 scripts tags products.js , cart.js and this amazon.js
+    with this approach we can easily get naming conflicts like initializing an already definedn variables ... 
+    by using module we need to export and import the variables, functions scripts we want -->
     <script type="module" src="scripts/amazon.js"></script>
   </body>
 </html>
