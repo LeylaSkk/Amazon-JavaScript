@@ -17,7 +17,7 @@ export function renderPaymentSummary(){
 
     cart.forEach((cartItem)=>{
         const product  = getProduct(cartItem.productId);
-        productPriceCents += product.priceCents * cartItem.quantity;
+        productPriceCents += product.priceCents * cartItem.quantity; /**we did calculate the pri for each product in cart */ 
 
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
 
@@ -66,27 +66,34 @@ export function renderPaymentSummary(){
     `;
 
     document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
+    
     //creates an order from the backend and save it to local storage
+    // This function is triggered when the "Place Order" button  is clicked.
     document.querySelector('.js-place-order').addEventListener('click', async ()=>{
         try{
+            // Sends a POST request to the backend to create a new order.
             const response = await fetch('https://supersimplebackend.dev/orders', {
-                method:'POST',
+                method:'POST', // Specifies the HTTP method as POST for creating a resource.
                 headers: {
-                'Content-Type':'application/json'
+                'Content-Type':'application/json' // Indicates that the request body is in JSON format.
                 },
-                body:JSON.stringify({
+                body:JSON.stringify({  // Sends the current cart's contents as the request payload.
                 cart: cart
                 })
                 });
+                // Waits for the server's response and parses it into JSON format.
                 const order = await response.json();
+                // Call the addOrder function to save the newly created order locally.
                 addOrder(order);
         }catch(error){
+            // If something goes wrong during the fetch, an error message is logged to the console.
             console.log('unexpected error , try again ');
         }
 
         window.location.href= 'orders.html';
        
-    
+    //Es6+
         });
 
 }
+//localStorage.getItem('orders')
